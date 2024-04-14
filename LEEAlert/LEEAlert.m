@@ -29,6 +29,10 @@
 #define DEFAULTBORDERWIDTH (1.0f / [[UIScreen mainScreen] scale] + 0.02f)
 #define VIEWSAFEAREAINSETS(view) ({UIEdgeInsets i; if(@available(iOS 11.0, *)) {i = view.safeAreaInsets;} else {i = UIEdgeInsetsZero;} i;})
 
+#define HEXColor(rgbValue, a) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:a]
+
+static CGFloat kDefRadius = 12.f;
+
 #pragma mark - ===================配置模型===================
 
 typedef NS_ENUM(NSInteger, LEEBackgroundStyle) {
@@ -125,22 +129,17 @@ typedef NS_ENUM(NSInteger, LEEBackgroundStyle) {
         _modelHeaderInsets = UIEdgeInsetsMake(20.0f, 20.0f, 20.0f, 20.0f); //默认间距
         _modelOpenAnimationDuration = 0.3f; //默认打开动画时长
         _modelCloseAnimationDuration = 0.2f; //默认关闭动画时长
-        _modelBackgroundStyleColorAlpha = 0.45f; //自定义背景样式颜色透明度 默认为半透明背景样式 透明度为0.45f
+        _modelBackgroundStyleColorAlpha = 0.5f; //自定义背景样式颜色透明度 默认为半透明背景样式 透明度为0.5f
         _modelQueuePriority = 0; //默认队列优先级 (大于0时才会加入队列)
         
         
-        _modelActionSheetBackgroundColor = [UIColor clearColor]; //默认actionsheet背景颜色
-        _modelActionSheetCancelActionSpaceColor = [UIColor clearColor]; //默认actionsheet取消按钮间隔颜色
-        _modelActionSheetCancelActionSpaceWidth = 10.0f; //默认actionsheet取消按钮间隔宽度
-        _modelActionSheetBottomMargin = 10.0f; //默认actionsheet距离屏幕底部距离
+        _modelActionSheetBackgroundColor = [UIColor whiteColor]; //默认actionsheet背景颜色
+        _modelActionSheetCancelActionSpaceColor = HEXColor(0xF3F3F5, 1); //默认actionsheet取消按钮间隔颜色
+        _modelActionSheetCancelActionSpaceWidth = 8.0f; //默认actionsheet取消按钮间隔宽度
+        _modelActionSheetBottomMargin = 0.0f; //默认actionsheet距离屏幕底部距离
         
         _modelShadowColor = [UIColor blackColor]; //默认阴影颜色
-        if (@available(iOS 13.0, *)) {
-            _modelHeaderColor = [UIColor tertiarySystemBackgroundColor]; //默认颜色
-            
-        } else {
-            _modelHeaderColor = [UIColor whiteColor]; //默认颜色
-        }
+        _modelHeaderColor = [UIColor whiteColor]; //默认颜色
         _modelBackgroundColor = [UIColor blackColor]; //默认背景半透明颜色
         
         _modelIsClickBackgroundClose = NO; //默认点击背景不关闭
@@ -157,9 +156,9 @@ typedef NS_ENUM(NSInteger, LEEBackgroundStyle) {
         _modelBackgroundBlurEffectStyle = UIBlurEffectStyleDark; //默认模糊效果类型Dark
         _modelSupportedInterfaceOrientations = UIInterfaceOrientationMaskAll; //默认支持所有方向
         
-        _modelCornerRadii = CornerRadiiMake(13.0f, 13.0f, 13.0f, 13.0f); //默认圆角半径
-        _modelActionSheetHeaderCornerRadii = CornerRadiiMake(13.0f, 13.0f, 13.0f, 13.0f); //默认圆角半径
-        _modelActionSheetCancelActionCornerRadii = CornerRadiiMake(13.0f, 13.0f, 13.0f, 13.0f); //默认圆角半径
+        _modelCornerRadii = CornerRadiiMake(kDefRadius, kDefRadius, kDefRadius, kDefRadius); //默认圆角半径
+        _modelActionSheetHeaderCornerRadii = CornerRadiiMake(kDefRadius, kDefRadius, kDefRadius, kDefRadius); //默认圆角半径
+        _modelActionSheetCancelActionCornerRadii = CornerRadiiMake(kDefRadius, kDefRadius, kDefRadius, kDefRadius); //默认圆角半径
         
         
         if (@available(iOS 13.0, *)) {
@@ -4207,7 +4206,11 @@ CGPathRef _Nullable LEECGPathCreateWithRoundedRect(CGRect bounds, CornerRadii co
 
 - (LEEBaseConfigModel *)config{
     
-    if (!_config) _config = [[LEEBaseConfigModel alloc] init];
+    if (!_config) {
+        _config = [[LEEBaseConfigModel alloc] init];
+        _config.modelHeaderColor = [UIColor whiteColor]; //默认颜色
+        _config.modelHeaderInsets = UIEdgeInsetsMake(20.0f, 20.0f, 20.0f, 20.0f); //默认间距
+    }
     
     return _config;
 }
@@ -4223,7 +4226,7 @@ CGPathRef _Nullable LEECGPathCreateWithRoundedRect(CGRect bounds, CornerRadii co
         
         self.config
         .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type, CGSize size) {
-            
+
             return 280.0f;
         })
         .LeeConfigMaxHeight(^CGFloat(LEEScreenOrientationType type, CGSize size) {
@@ -4251,10 +4254,15 @@ CGPathRef _Nullable LEECGPathCreateWithRoundedRect(CGRect bounds, CornerRadii co
 {
     self = [super init];
     if (self) {
+        self.config.modelActionSheetCancelActionSpaceWidth = 8.0f; //默认actionsheet取消按钮间隔宽度
+        self.config.modelActionSheetBottomMargin = 0.f; //默认actionsheet距离屏幕底部距离
+        self.config.modelHeaderInsets = UIEdgeInsetsMake(16.0f, 16.0f, 16.0f, 16.0f); //默认间距
+        
         self.config
         .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type, CGSize size) {
             
-            return type == LEEScreenOrientationTypeHorizontal ? size.height - VIEWSAFEAREAINSETS([LEEAlert getAlertWindow]).top - VIEWSAFEAREAINSETS([LEEAlert getAlertWindow]).bottom - 20.0f : size.width - VIEWSAFEAREAINSETS([LEEAlert getAlertWindow]).left - VIEWSAFEAREAINSETS([LEEAlert getAlertWindow]).right - 20.0f;
+            return type == LEEScreenOrientationTypeHorizontal ? size.height - VIEWSAFEAREAINSETS([LEEAlert getAlertWindow]).top - VIEWSAFEAREAINSETS([LEEAlert getAlertWindow]).bottom - 20.0f : SCREEN_WIDTH;
+//            size.width - VIEWSAFEAREAINSETS([LEEAlert getAlertWindow]).left - VIEWSAFEAREAINSETS([LEEAlert getAlertWindow]).right - 20.0f
         })
         .LeeConfigMaxHeight(^CGFloat(LEEScreenOrientationType type, CGSize size) {
             

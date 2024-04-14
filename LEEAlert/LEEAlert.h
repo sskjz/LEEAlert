@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)containsQueueWithIdentifier:(NSString *)identifier;
 
 /**
- 关闭指定标识 
+ 关闭指定标识
 
  @param identifier 标识
  @param completionBlock 关闭完成回调
@@ -161,10 +161,10 @@ NS_ASSUME_NONNULL_BEGIN
 /** 设置 上一项的间距 (在它之前添加的项的间距) -> 格式: .LeeItemInsets(UIEdgeInsetsMake(5, 0, 5, 0)) */
 @property (nonatomic, copy, readonly) LEEConfigToEdgeInsets LeeItemInsets;
 
-/** 设置 圆角半径 -> 格式: .LeeCornerRadius(13.0f) */
+/** 设置 圆角半径 -> 格式: .LeeCornerRadius(12.0f) */
 @property (nonatomic, copy, readonly) LEEConfigToFloat LeeCornerRadius;
 
-/** 设置 圆角半径 -> 格式: .LeeCornerRadii(CornerRadiiMake(13.0f, 13.0f, 13.0f, 13.0f))  注意: 该方法优先级高于LeeCornerRadius  */
+/** 设置 圆角半径 -> 格式: .LeeCornerRadii(CornerRadiiMake(12.0f, 12.0f, 12.0f, 12.0f))  注意: 该方法优先级高于LeeCornerRadius  */
 @property (nonatomic, copy, readonly) LEEConfigToCornerRadii LeeCornerRadii;
 
 /** 设置 颜色 -> 格式: .LeeHeaderColor(UIColor) */
@@ -249,7 +249,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LEEBaseConfigModel(Layout)
 
-/** 设置 最大宽度 -> 格式: .LeeMaxWidth(280.0f) */
+/** 设置 最大宽度 -> 格式: .LeeMaxWidth(sheet: SCREEN_WIDTH alert: 280) */
 @property (nonatomic, copy, readonly) LEEConfigToFloat LeeMaxWidth;
 
 /** 设置 最大高度 -> 格式: .LeeMaxHeight(400.0f) */
@@ -313,22 +313,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LEEBaseConfigModel(ActionSheet)
 
-/** 设置 ActionSheet头部的圆角半径 -> 格式: .LeeActionSheetHeaderCornerRadii(CornerRadiiMake(13.0f, 13.0f, 13.0f, 13.0f)) */
+/** 设置 ActionSheet头部的圆角半径 -> 格式: .LeeActionSheetHeaderCornerRadii(CornerRadiiMake(12.0f, 12.0f, 12.0f, 12.0f)) */
 @property (nonatomic, copy, readonly) LEEConfigToCornerRadii LeeActionSheetHeaderCornerRadii;
 
-/** 设置 ActionSheet取消按钮的圆角半径 -> 格式: .LeeActionSheetCancelActionCornerRadii(CornerRadiiMake(13.0f, 13.0f, 13.0f, 13.0f))  */
+/** 设置 ActionSheet取消按钮的圆角半径 -> 格式: .LeeActionSheetCancelActionCornerRadii(CornerRadiiMake(12.0f, 12.0f, 12.0f, 12.0f))  */
 @property (nonatomic, copy, readonly) LEEConfigToCornerRadii LeeActionSheetCancelActionCornerRadii;
 
 /** 设置 ActionSheet的背景视图颜色 -> 格式: .LeeActionSheetBackgroundColor(UIColor) */
 @property (nonatomic, copy, readonly) LEEConfigToColor LeeActionSheetBackgroundColor;
 
-/** 设置 取消动作的间隔宽度 -> 格式: .LeeActionSheetCancelActionSpaceWidth(10.0f) */
+/** 设置 取消动作的间隔宽度 -> 格式: .LeeActionSheetCancelActionSpaceWidth(8.0f) */
 @property (nonatomic, copy, readonly) LEEConfigToFloat LeeActionSheetCancelActionSpaceWidth;
 
 /** 设置 取消动作的间隔颜色 -> 格式: .LeeActionSheetCancelActionSpaceColor(UIColor) */
 @property (nonatomic, copy, readonly) LEEConfigToColor LeeActionSheetCancelActionSpaceColor;
 
-/** 设置 ActionSheet距离屏幕底部的间距 -> 格式: .LeeActionSheetBottomMargin(10.0f) */
+/** 设置 ActionSheet距离屏幕底部的间距 -> 格式: .LeeActionSheetBottomMargin(0.0f) */
 @property (nonatomic, copy, readonly) LEEConfigToFloat LeeActionSheetBottomMargin;
 
 @end
