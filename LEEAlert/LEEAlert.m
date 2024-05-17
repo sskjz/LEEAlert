@@ -273,7 +273,7 @@ typedef NS_ENUM(NSInteger, LEEBackgroundStyle) {
             
             action.title = title;
             
-            action.font = [UIFont boldSystemFontOfSize:18.0f];
+            action.font = [UIFont systemFontOfSize:14.0f];
             
             action.clickBlock = block;
         });
@@ -2620,7 +2620,7 @@ CGPathRef _Nullable LEECGPathCreateWithRoundedRect(CGRect bounds, CornerRadii co
                 
                 label.textAlignment = NSTextAlignmentCenter;
                 
-                label.font = [UIFont boldSystemFontOfSize:18.0f];
+                label.font = [UIFont boldSystemFontOfSize:16.0f];
                 
                 if (@available(iOS 13.0, *)) {
                     label.textColor = [UIColor labelColor];
@@ -2734,13 +2734,13 @@ CGPathRef _Nullable LEECGPathCreateWithRoundedRect(CGRect bounds, CornerRadii co
         
         if (block) block(action);
         
-        if (!action.font) action.font = [UIFont systemFontOfSize:18.0f];
+        if (!action.font) action.font = [UIFont systemFontOfSize:14.0f];
         
         if (!action.title) action.title = @"按钮";
         
         if (!action.titleColor) {
             if (@available(iOS 13.0, *)) {
-                action.titleColor = [UIColor systemBlueColor];
+                action.titleColor = [UIColor blackColor];
                 
             } else {
                 action.titleColor = [UIColor colorWithRed:21/255.0f green:123/255.0f blue:245/255.0f alpha:1.0f];
@@ -3594,13 +3594,13 @@ CGPathRef _Nullable LEECGPathCreateWithRoundedRect(CGRect bounds, CornerRadii co
         
         if (block) block(action);
         
-        if (!action.font) action.font = [UIFont systemFontOfSize:18.0f];
+        if (!action.font) action.font = [UIFont systemFontOfSize:14.0f];
         
         if (!action.title) action.title = @"按钮";
         
         if (!action.titleColor) {
             if (@available(iOS 13.0, *)) {
-                action.titleColor = [UIColor systemBlueColor];
+                action.titleColor = [UIColor blackColor];
                 
             } else {
                 action.titleColor = [UIColor colorWithRed:21/255.0f green:123/255.0f blue:245/255.0f alpha:1.0f];
@@ -3641,6 +3641,10 @@ CGPathRef _Nullable LEECGPathCreateWithRoundedRect(CGRect bounds, CornerRadii co
                 button.lee_alert_cornerRadii = self.config.modelActionSheetCancelActionCornerRadii;
                 
                 button.backgroundColor = action.backgroundColor;
+                
+                [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                
+                button.titleLabel.font = action.font;
                 
                 [self.containerView addSubview:button];
                 
